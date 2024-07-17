@@ -9,26 +9,27 @@
  */
 
 package org.snhu.alexanderbaires;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class ContactService {
 
-    ArrayList<Contact> contactList = new ArrayList<Contact>();
+    HashMap<String, Contact> contactList = new HashMap<>();
 
     public void addContact(String firstName, String lastName, String phone, String address) {
         String uniqueID = getHash(firstName, lastName);
         Contact contact = new Contact(uniqueID, firstName, lastName, phone, address);
         // VerifyContact
-        // CheckifContactExists
-        contactList.add(contact);
-
+        checkExistingContacts(contact.getContactID());
+        contactList.put(uniqueID, contact);
     }
 
-    public void verifyContact() {
-
+    public void checkExistingContacts(String key) {
+        if(contactList.containsKey(key)) {
+            throw new RuntimeException("Contact already exists");
+        }
     }
 
     /**
@@ -61,8 +62,8 @@ public class ContactService {
         // Converts byte array into HexString object
         StringBuilder hexString = new StringBuilder();
 
-        for (int i = 0; i < bytes.length; ++i) {
-            hexString.append(String.format("%02x", bytes[i]));
+        for (byte aByte : bytes) {
+            hexString.append(String.format("%02x", aByte));
         }
         hex = hexString.toString();
         return hex;
@@ -86,8 +87,8 @@ public class ContactService {
 
     // FIXME: This function, while not in the parameters, is used for verification. Can be deleted in final
     public void printContactList() {
-        for (Contact contact : contactList) {
-            System.out.println(contact);
+        for (HashMap.Entry entry : contactList.entrySet()) {
+            System.out.println(entry.getValue());
         }
     }
 }

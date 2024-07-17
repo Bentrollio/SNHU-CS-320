@@ -9,7 +9,7 @@ public class Main {
 
         contactService.addContact("Ivan", "Baires", "8008675309", "123 Sesame Street");
         contactService.addContact("Luke", "Skywalker", "8009992345", "Imperial City, Coruscant");
-        contactService.addContact("Ivan", "Baires", "8008675309", "123 Sesame Street");
+        //contactService.addContact("Ivan", "Baires", "8008675309", "123 Sesame Street");
         contactService.printContactList();
     }
 }
