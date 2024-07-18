@@ -25,6 +25,10 @@ public class ContactService {
         contactList.put(uniqueID, contact);
     }
 
+    public void deleteContact(String uniqueID) {
+        contactList.remove(uniqueID);
+    }
+
     public void checkExistingContacts(String key) {
         if(contactList.containsKey(key)) {
             throw new RuntimeException("Contact already exists");
@@ -36,6 +40,26 @@ public class ContactService {
         contact.verifyLastName();
         contact.verifyMailingAddress();
         contact.verifyPhoneNumber();
+    }
+
+    public void updateFirstName(String uniqueID, String firstName) {
+        Contact temp = contactList.get(uniqueID);
+        temp.setFirstName(firstName);
+    }
+
+    public void updateLastName(String uniqueID, String lastName) {
+        Contact temp = contactList.get(uniqueID);
+        temp.setLastName(lastName);
+    }
+
+    public void updateMailingAddress(String uniqueID, String mailingAddress) {
+        Contact temp = contactList.get(uniqueID);
+        temp.setMailingAddress(mailingAddress);
+    }
+
+    public void updatePhoneNumber(String uniqueID, String phoneNumber) {
+        Contact temp = contactList.get(uniqueID);
+        temp.setPhoneNumber(phoneNumber);
     }
 
     /**

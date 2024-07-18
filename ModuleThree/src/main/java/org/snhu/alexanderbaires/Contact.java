@@ -93,6 +93,10 @@ public class Contact {
         if(this.mailingAddress == null || this.mailingAddress.isBlank()) {
             throw new RuntimeException("Mailing address is null or empty");
         }
+
+        if (this.mailingAddress.length() > 30) {
+            throw new RuntimeException("Mailing address length must be 30 digits");
+        }
     }
 
     // Prints object for verification purposes

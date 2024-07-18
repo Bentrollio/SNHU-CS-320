@@ -11,5 +11,19 @@ public class Main {
         contactService.addContact("Luke", "Skywalker", "8009992345", "Imperial City, Coruscant");
         //contactService.addContact("Han", "Solo", "800867530", "123 Sesame Street");
         contactService.printContactList();
+
+
+        System.out.println("----------------------");
+        contactService.deleteContact(contactService.getHash("Luke", "Skywalker"));
+
+        contactService.printContactList();
+
+
+        contactService.updateFirstName(contactService.getHash("Ivan", "Baires"), "Alex");
+
+        System.out.println("----------------------");
+        System.out.println("----------------------");
+        contactService.printContactList();
+
     }
 }
