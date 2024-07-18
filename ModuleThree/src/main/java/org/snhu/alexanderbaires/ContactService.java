@@ -9,6 +9,7 @@
  */
 
 package org.snhu.alexanderbaires;
+import java.util.Collection;
 import java.util.HashMap;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -40,6 +41,14 @@ public class ContactService {
         contact.verifyLastName();
         contact.verifyMailingAddress();
         contact.verifyPhoneNumber();
+    }
+
+    public HashMap<String, Contact> getContactList() {
+        return contactList;
+    }
+
+    public Contact retrieveContact(String uniqueID) {
+        return contactList.get(uniqueID);
     }
 
     public void updateFirstName(String uniqueID, String firstName) {

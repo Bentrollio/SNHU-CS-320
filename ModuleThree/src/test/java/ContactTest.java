@@ -14,6 +14,21 @@
  * The contact object shall have a required address field that must be no longer than 30 characters.
  * The address field shall not be null.
  */
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.snhu.alexanderbaires.Contact;
 
 public class ContactTest {
+    private Contact contact;
+
+
+
 }

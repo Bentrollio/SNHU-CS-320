@@ -42,7 +42,10 @@ public class Contact {
 
     public void verifyFirstName() {
         if(this.firstName == null || this.firstName.isBlank()) {
-            throw new RuntimeException("First name is null or empty");
+            throw new RuntimeException("First name field is NULL or empty");
+        }
+        if (this.firstName.length() > 10) {
+            throw new RuntimeException("First name field must be 10 characters or less");
         }
     }
 
@@ -57,7 +60,10 @@ public class Contact {
 
     public void verifyLastName() {
         if(this.lastName == null || this.lastName.isBlank()) {
-            throw new RuntimeException("Last name is null or empty");
+            throw new RuntimeException("Last name field is NULL or empty");
+        }
+        if (this.lastName.length() > 10) {
+            throw new RuntimeException("Last name field must be 10 characters or less");
         }
     }
 
@@ -71,12 +77,18 @@ public class Contact {
     }
 
     public void verifyPhoneNumber() {
-        if(this.phoneNumber == null || this.phoneNumber.isBlank()) {
+        if (this.phoneNumber == null || this.phoneNumber.isBlank()) {
             throw new RuntimeException("Phone number is null or empty");
         }
 
         if (this.phoneNumber.length() != 10) {
             throw new RuntimeException("Phone number length must be 10 digits");
+        }
+
+        try {
+            Double.parseDouble(this.phoneNumber);
+        } catch (NumberFormatException e) {
+            throw new RuntimeException("Phone number has invalid characters");
         }
     }
 
@@ -95,7 +107,7 @@ public class Contact {
         }
 
         if (this.mailingAddress.length() > 30) {
-            throw new RuntimeException("Mailing address length must be 30 digits");
+            throw new RuntimeException("Mailing address length must be no longer than 30 characters");
         }
     }
 
