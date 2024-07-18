@@ -10,7 +10,6 @@
 
 package org.snhu.alexanderbaires;
 import java.util.HashMap;
-import java.util.Random;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -21,7 +20,7 @@ public class ContactService {
     public void addContact(String firstName, String lastName, String phone, String address) {
         String uniqueID = getHash(firstName, lastName);
         Contact contact = new Contact(uniqueID, firstName, lastName, phone, address);
-        // VerifyContact
+        verifyContact(contact);
         checkExistingContacts(contact.getContactID());
         contactList.put(uniqueID, contact);
     }
@@ -32,22 +31,11 @@ public class ContactService {
         }
     }
 
-    /**
-     * Adapted from the below stack overflow post:
-     *https://stackoverflow.com/questions/20536566/creating-a-random-string-with-a-z-and-0-9-in-java
-     *
-     * @return String randomKey
-     */
-
-    protected String getSaltString() {
-        String saltChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-        StringBuilder salt = new StringBuilder();
-        Random rnd = new Random();
-        while (salt.length() < 10) { // length of the random string
-            int index = (int) (rnd.nextFloat() * saltChars.length());
-            salt.append(saltChars.charAt(index));
-        }
-        return salt.toString();
+    public void verifyContact(Contact contact) {
+        contact.verifyFirstName();
+        contact.verifyLastName();
+        contact.verifyMailingAddress();
+        contact.verifyPhoneNumber();
     }
 
     /**

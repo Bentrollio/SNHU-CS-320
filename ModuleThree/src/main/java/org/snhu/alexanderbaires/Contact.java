@@ -40,6 +40,12 @@ public class Contact {
         return firstName;
     }
 
+    public void verifyFirstName() {
+        if(this.firstName == null || this.firstName.isBlank()) {
+            throw new RuntimeException("First name is null or empty");
+        }
+    }
+
     // Updates and retrieves the customer's last name
     public void setLastName(String lastName) {
         this.lastName = lastName;
@@ -47,6 +53,12 @@ public class Contact {
 
     public String getLastName() {
         return lastName;
+    }
+
+    public void verifyLastName() {
+        if(this.lastName == null || this.lastName.isBlank()) {
+            throw new RuntimeException("Last name is null or empty");
+        }
     }
 
     // Updates and retrieves the customer's phone number
@@ -58,6 +70,16 @@ public class Contact {
         return phoneNumber;
     }
 
+    public void verifyPhoneNumber() {
+        if(this.phoneNumber == null || this.phoneNumber.isBlank()) {
+            throw new RuntimeException("Phone number is null or empty");
+        }
+
+        if (this.phoneNumber.length() != 10) {
+            throw new RuntimeException("Phone number length must be 10 digits");
+        }
+    }
+
     // Updates and retrieves the customer's mailing address
     public void setMailingAddress(String mailingAddress) {
         this.mailingAddress = mailingAddress;
@@ -67,12 +89,15 @@ public class Contact {
         return mailingAddress;
     }
 
+    public void verifyMailingAddress() {
+        if(this.mailingAddress == null || this.mailingAddress.isBlank()) {
+            throw new RuntimeException("Mailing address is null or empty");
+        }
+    }
+
     // Prints object for verification purposes
     public String toString() {
         return contactID + "\n" + firstName + " " + lastName + "\n" +
                 phoneNumber + "\n" + mailingAddress;
     }
-
-
-
 }
