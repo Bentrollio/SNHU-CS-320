@@ -9,7 +9,6 @@
  */
 
 package org.snhu.alexanderbaires;
-import java.util.Collection;
 import java.util.HashMap;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -21,7 +20,6 @@ public class ContactService {
     public void addContact(String firstName, String lastName, String phone, String address) {
         String uniqueID = getHash(firstName, lastName);
         Contact contact = new Contact(uniqueID, firstName, lastName, phone, address);
-        verifyContact(contact);
         checkExistingContacts(contact.getContactID());
         contactList.put(uniqueID, contact);
     }
@@ -36,6 +34,7 @@ public class ContactService {
         }
     }
 
+    // FIXME: Placeholder function to verify all parameters at once.
     public void verifyContact(Contact contact) {
         contact.verifyFirstName();
         contact.verifyLastName();
@@ -43,6 +42,7 @@ public class ContactService {
         contact.verifyPhoneNumber();
     }
 
+    // Hash map holding each contact list
     public HashMap<String, Contact> getContactList() {
         return contactList;
     }
@@ -90,6 +90,16 @@ public class ContactService {
         return hex;
     }
 
+    /**
+     * generateCheckSum
+     *
+     * Adapted from:
+     * https://www.tutorialspoint.com/java_cryptography/java_cryptography_message_digest.htm#:~:text=You%20can%20generate%20the%20message,digest%20using%20the%20digest%20method.
+     *
+     * @param firstName, lastName - 2 strings to be concatenated
+     * and converted into a SHA-256 checksum. Function only retrieves the first 10 digits.
+     * @return checkSum - A string containing the HexString converted message as output.
+     */
     protected String getHash(String firstName, String lastName) {
         String combinedString = firstName + lastName;
         String checkSum = "";

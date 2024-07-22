@@ -40,13 +40,12 @@ public class ContactServiceTest {
     }
 
     @Test
-    @DisplayName("Should Avoid Duplicate Contacts")
-    public void testAvoidDuplicateContacts() {
-        contactService.addContact("Aaron", "Judge", "7188675309",
-        "Yankee Stadium, NYC");
-        Assertions.assertThrows(RuntimeException.class, () -> {contactService.addContact("Aaron", "Judge", "7188675309",
-                "Yankee Stadium, NYC");
-        });
+    @DisplayName("New contact should have a unique ID generated")
+    public void testWhetherContactHasID() {
+        contactService.addContact("Ivan", "Baires",
+                "4078736418", "308 lake hills ln");
+        String uniqueIDTest = contactService.getContactList().keySet().iterator().next();
+        assertFalse(contactService.retrieveContact(uniqueIDTest).getContactID().isEmpty());
     }
 
     @Test
@@ -58,6 +57,16 @@ public class ContactServiceTest {
         contactService.addContact("Luke", "Skywalker", "8009992345", "Imperial City, Coruscant");
         String secondUniqueIDTest = contactService.getContactList().keySet().iterator().next();
         assertNotEquals(firstUniqueIDTest, secondUniqueIDTest);
+    }
+
+    @Test
+    @DisplayName("Should Avoid Duplicate Contacts")
+    public void testAvoidDuplicateContacts() {
+        contactService.addContact("Aaron", "Judge", "7188675309",
+        "Yankee Stadium, NYC");
+        Assertions.assertThrows(RuntimeException.class, () -> {contactService.addContact("Aaron", "Judge", "7188675309",
+                "Yankee Stadium, NYC");
+        });
     }
 
     @Test
