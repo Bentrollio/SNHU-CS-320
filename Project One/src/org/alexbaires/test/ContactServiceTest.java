@@ -1,4 +1,5 @@
 /* Alex Baires - SNHU CS-320
+ * PROJECT ONE
  * ContactServiceTest.java
  *
  * JUNIT5 Test Suite - Designed to test the following:
@@ -9,18 +10,19 @@
  * The following fields are updatable:
  * firstName, lastName, Number, Address
  */
+package org.alexbaires.test;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import org.junit.jupiter.api.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.alexbaires.main.ContactService;
+import org.alexbaires.main.Contact;
 
-import org.snhu.alexanderbaires.ContactService;
+import java.util.Arrays;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ContactServiceTest {
 
@@ -30,13 +32,22 @@ public class ContactServiceTest {
     public void setupContactService() {
         contactService = new ContactService();
     }
+
     @Test
-    @DisplayName("Should Add a Contact")
-    public void testAddContact() {
+    @DisplayName("Should Add a Contact and Retrieve its Individual Details")
+    public void testAddAndRetrieveContact() {
         contactService.addContact("Ivan", "Baires",
                 "4078736418", "308 lake hills ln");
         assertFalse(contactService.getContactList().isEmpty());
         assertEquals(1, contactService.getContactList().size());
+
+        String uniqueID = contactService.getContactList().keySet().iterator().next();
+        Contact contact = contactService.retrieveContact(uniqueID);
+        Assertions.assertNotNull(contact);
+        assertEquals("Ivan", contact.getFirstName());
+        assertEquals("Baires", contact.getLastName());
+        assertEquals("4078736418", contact.getPhoneNumber());
+        assertEquals("308 lake hills ln", contact.getMailingAddress());
     }
 
     @Test
@@ -54,6 +65,7 @@ public class ContactServiceTest {
         contactService.addContact("Aaron", "Judge", "7188675309",
                 "Yankee Stadium, NYC");
         String firstUniqueIDTest = contactService.getContactList().keySet().iterator().next();
+
         contactService.addContact("Luke", "Skywalker", "8009992345", "Imperial City, Coruscant");
         String secondUniqueIDTest = contactService.getContactList().keySet().iterator().next();
         assertNotEquals(firstUniqueIDTest, secondUniqueIDTest);
@@ -63,10 +75,24 @@ public class ContactServiceTest {
     @DisplayName("Should Avoid Duplicate Contacts")
     public void testAvoidDuplicateContacts() {
         contactService.addContact("Aaron", "Judge", "7188675309",
-        "Yankee Stadium, NYC");
-        Assertions.assertThrows(RuntimeException.class, () -> {contactService.addContact("Aaron", "Judge", "7188675309",
                 "Yankee Stadium, NYC");
+        Assertions.assertThrows(RuntimeException.class, () -> {
+            contactService.addContact("Aaron", "Judge", "7188675309",
+                    "Yankee Stadium, NYC");
         });
+    }
+
+    @Test
+    @DisplayName("Testing whether multiple contacts are stored")
+    public void testAddMultipleContacts() {
+
+        contactService.addContact("Aaron", "Judge", "7188675309",
+                "Yankee Stadium, NYC");
+        contactService.addContact("Luke", "Skywalker", "8009992345", "Imperial City, Coruscant");
+        assertEquals(2, contactService.getContactList().size());
+
+        contactService.addContact("Ivan", "Baires", "4078736418", "308 lake hills ln");
+        assertEquals(3, contactService.getContactList().size());
     }
 
     @Test
@@ -81,74 +107,82 @@ public class ContactServiceTest {
     }
 
     @Test
-    @DisplayName("Should Not Create a Contact When First Name is NULL")
-    public void testRunTimeExceptionNullFirstName() {
+    @DisplayName("Testing Invalid Contact Data Error-Handling")
+    public void testInvalidContactData() {
+        // Testing NULL first Name
         Assertions.assertThrows(RuntimeException.class, () -> {
             contactService.addContact(null, "Baires", "8631234567", "123 Sesame Street");
         });
-    }
+        // Testing blank first name
+        Assertions.assertThrows(RuntimeException.class, () -> {
+            contactService.addContact("", "Baires", "8631234567", "123 Sesame Street");
+        });
 
-    @Test
-    @DisplayName("Should Not Create a Contact When Last Name is NULL")
-    public void testRunTimeExceptionNullLastName() {
+        // Testing NULL last name
         Assertions.assertThrows(RuntimeException.class, () -> {
             contactService.addContact("Ivan", null, "8631234567", "123 Sesame Street");
         });
-    }
-
-    @Test
-    @DisplayName("Should Not Create a Contact with a NULL phone number")
-    public void testRunTimeExceptionNullPhoneNumber() {
+        // Testing blank last name
+        Assertions.assertThrows(RuntimeException.class, () -> {
+            contactService.addContact("Ivan", "", "8631234567", "123 Sesame Street");
+        });
+        // Testing NULL phone number
         Assertions.assertThrows(RuntimeException.class, () -> {
             contactService.addContact("Ivan", "Baires", null, "123 Sesame Street");
         });
-    }
-
-    @Test
-    @DisplayName("Should Not Create a Contact with a NULL address")
-    public void testRunTimeExceptionNullAddress() {
+        // Testing blank phone number
+        Assertions.assertThrows(RuntimeException.class, () -> {
+            contactService.addContact("Ivan", "Baires", "", "123 Sesame Street");
+        });
+        // Testing NULL address
         Assertions.assertThrows(RuntimeException.class, () -> {
             contactService.addContact("Ivan", "Baires", "8631234567", null);
+        });
+        //Testing blank address
+        Assertions.assertThrows(RuntimeException.class, () -> {
+            contactService.addContact("Ivan", "Baires", "8631234567", "");
         });
     }
 
     @Test
-    @DisplayName("Contact Service Shall Update First Name")
-    public void testUpdateFirstName() {
-        contactService.addContact("Ivan", "Baires",
-                "8631234567", "123 Sesame Street");
+    @DisplayName("Testing Updatable Contact Information")
+    public void testUpdateContactInfo() {
+        contactService.addContact("Ivan", "Baires", "8631234567", "123 Sesame Street");
         String uniqueIDTest = contactService.getContactList().keySet().iterator().next();
+
+        // Updating First Name
         contactService.updateFirstName(uniqueIDTest, "Vanya");
         assertEquals("Vanya", contactService.retrieveContact(uniqueIDTest).getFirstName());
-    }
 
-    @Test
-    @DisplayName("Contact Service Shall Update Last Name")
-    public void testUpdateLastName() {
-        contactService.addContact("Ivan", "Baires",
-                "8631234567", "123 Sesame Street");
-        String uniqueIDTest = contactService.getContactList().keySet().iterator().next();
+        // Updating Last Name
         contactService.updateLastName(uniqueIDTest, "The Dog");
         assertEquals("The Dog", contactService.retrieveContact(uniqueIDTest).getLastName());
-    }
 
-    @Test
-    @DisplayName("Contact Service Shall Update Phone Number")
-    public void testUpdatePhoneNumber() {
-        contactService.addContact("Ivan", "Baires",
-                "8631234567", "123 Sesame Street");
-        String uniqueIDTest = contactService.getContactList().keySet().iterator().next();
+        // Updating phone number
         contactService.updatePhoneNumber(uniqueIDTest, "5888800000");
         assertEquals("5888800000", contactService.retrieveContact(uniqueIDTest).getPhoneNumber());
+
+        // Updating mailing address
+        contactService.updateMailingAddress(uniqueIDTest, "1 Jumbo Ave");
+        assertEquals("1 Jumbo Ave", contactService.getContactList().get(uniqueIDTest).getMailingAddress());
     }
 
     @Test
-    @DisplayName("Contact Service Shall Update Mailing Address")
-    public void testUpdateMailingAddress() {
-        contactService.addContact("Ivan", "Baires",
-                "8631234567", "123 Sesame Street");
-        String uniqueIDTest = contactService.getContactList().keySet().iterator().next();
-        contactService.updateMailingAddress(uniqueIDTest, "1 Jumbo Ave");
-        assertEquals("1 Jumbo Ave", contactService.getContactList().get(uniqueIDTest).getMailingAddress());
+    @DisplayName("Testing for edge cases")
+    public void testEdgeCases() {
+        char[] data = new char[1000];
+        Arrays.fill(data, 'a');
+        String str = new String(data);
+        // Testing very long input
+        assertThrows(RuntimeException.class, () -> { contactService.addContact(str, str, "1234567890", str); });
+        assertNotEquals(1, contactService.getContactList().size());
+
+        // Testing special characters
+        contactService.addContact("!@#$%^&*()", "!@#$%^&*()", "1234567890", "!@#$%^&*()");
+        assertEquals(1, contactService.getContactList().size());
+
+        // Testing special character for phone number
+        assertThrows(RuntimeException.class, () -> { contactService.addContact("test", "test", "!@#$%^&*()", "test"); });
+
     }
 }

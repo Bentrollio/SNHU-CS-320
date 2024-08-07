@@ -1,14 +1,15 @@
 /*
+ * PROJECT ONE
  * Contact.java
  *
  * Contains Contact Object information.
  *
  * Alex Baires
  * SNHU CS-320
- * 7-21-24
+ * 8-11-24
  */
 
-package org.snhu.alexanderbaires;
+package org.alexbaires.main;
 
 public class Contact {
 
@@ -32,6 +33,10 @@ public class Contact {
         verifyMailingAddress();
     }
 
+    public void setContactID(String contactID) {
+        throw new UnsupportedOperationException("Task ID Not updatable");
+    }
+
     // Retrieves contactID
     public String getContactID() {
         return contactID;
@@ -39,12 +44,12 @@ public class Contact {
 
     // Verifies that the contact ID is neither null, blank nor longer than 10 characters
     public void verifyContactID() {
-        if (this.contactID == null || this.contactID.isBlank()) {
-            throw new RuntimeException("Unique ID string is null or empty");
+        if (this.contactID == null || this.contactID.isEmpty()) {
+            throw new RuntimeException("Contact ID string is null or empty");
         }
 
         if (this.contactID.length() > 10) {
-            throw new RuntimeException("Unique ID string cannot be longer than 10 characters");
+            throw new RuntimeException("Contact ID string cannot be longer than 10 characters");
         }
     }
 
@@ -60,7 +65,7 @@ public class Contact {
 
     // Verifies that the first name is neither null, blank nor longer than 10 characters
     public void verifyFirstName() {
-        if(this.firstName == null || this.firstName.isBlank()) {
+        if(this.firstName == null || this.firstName.isEmpty()) {
             throw new RuntimeException("First name field is NULL or empty");
         }
         if (this.firstName.length() > 10) {
@@ -80,7 +85,7 @@ public class Contact {
 
     // Verifies that the last name is neither null, blank nor longer than 10 characters
     public void verifyLastName() {
-        if(this.lastName == null || this.lastName.isBlank()) {
+        if(this.lastName == null || this.lastName.isEmpty()) {
             throw new RuntimeException("Last name field is NULL or empty");
         }
         if (this.lastName.length() > 10) {
@@ -100,7 +105,7 @@ public class Contact {
 
     // Verifies that the phone number is neither null nor blank, and ensures it is 10 digits long
     public void verifyPhoneNumber() {
-        if (this.phoneNumber == null || this.phoneNumber.isBlank()) {
+        if (this.phoneNumber == null || this.phoneNumber.isEmpty()) {
             throw new RuntimeException("Phone number is null or empty");
         }
 
@@ -126,7 +131,7 @@ public class Contact {
 
     // Verifies that the mailing address is neither null nor empty
     public void verifyMailingAddress() {
-        if(this.mailingAddress == null || this.mailingAddress.isBlank()) {
+        if(this.mailingAddress == null || this.mailingAddress.isEmpty()) {
             throw new RuntimeException("Mailing address is null or empty");
         }
 

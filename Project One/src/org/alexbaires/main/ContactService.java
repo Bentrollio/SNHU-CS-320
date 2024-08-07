@@ -1,14 +1,15 @@
 /*
+ * PROJECT ONE
  * ContactService.java
  *
  * Creates and stores individual contacts with their details.
  *
  * Alex Baires
  * SNHU CS-320
- * 7-21-24
+ * 8-11-24
  */
 
-package org.snhu.alexanderbaires;
+package org.alexbaires.main;
 import java.util.HashMap;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
