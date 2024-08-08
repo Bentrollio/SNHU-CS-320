@@ -24,66 +24,52 @@ public class TaskTest {
     private static Task task;
 
     @Test
-    @DisplayName("Unique Task ID String should not be longer than 10 characters")
-    public void testUniqueTaskId() {
-        Assertions.assertThrows(RuntimeException.class, () -> {
-            task = new Task("123456789101", "Opening", "Opens" +
-                    " an individual contact");
-        });
+    @DisplayName("Testing Task ID Requirements - Not longer than 10 characters, not NULL or empty")
+    public void testTaskIDRequirements() {
+        // Test Task ID longer than 10 characters
+        Assertions.assertThrows(RuntimeException.class, () -> task = new Task("123456789101",
+                "Opening", "Opens an individual contact"));
+        // Test a NULL Task ID
+        Assertions.assertThrows(RuntimeException.class, () -> task = new Task(null, "Opening",
+                "Opens an individual contact"));
+        // Test an empty Task ID
+        Assertions.assertThrows(RuntimeException.class, () -> task = new Task("", "Opening",
+                "Opens an individual contact"));
     }
 
     @Test
-    @DisplayName("Task ID should not be null or empty")
-    public void testUniqueTaskIdNull() {
-        Assertions.assertThrows(RuntimeException.class, () -> {
-            task = new Task(null, "Opening", "Opens an individual contact");
-        });
-        Assertions.assertThrows(RuntimeException.class, () -> {
-            task = new Task("", "Opening", "Opens an individual contact");
-        });
-    }
-
-    @Test
-    @DisplayName("Test that task ID is not updatable")
-    public void testUpdateTaskID() {
+    @DisplayName("Task ID shall not be updatable")
+    public void testTaskIDNotUpdatable() {
         task = new Task ("1","Open e-mail", "Opens g-mail application");
-        Assertions.assertThrows(UnsupportedOperationException.class, () -> {
-            task.setTaskID("2");
-        });
+        Assertions.assertThrows(UnsupportedOperationException.class, () -> task.setTaskID("2"));
     }
 
     @Test
-    @DisplayName("Task name string field should not be longer than 20 characters")
-    public void testUniqueTaskNameString() {
-        Assertions.assertThrows(RuntimeException.class, () -> {
-            task = new Task("1", "Opening a brand new contact in the application", "Opens an individual contact");
-        });
+    @DisplayName("Testing Task Name Requirements - Not longer than 20 characters, not NULL or empty")
+    public void testTaskNameRequirements() {
+        // Test that Task Name is not longer than 20 characters
+        Assertions.assertThrows(RuntimeException.class, () -> task = new Task("1",
+                "Opening a brand new contact in the application", "Opens an individual contact"));
+        // Test a NULL Task Name field
+        Assertions.assertThrows(RuntimeException.class, () -> task = new Task("1", null,
+                "Adding Ivan as a new contact"));
+        // Test an empty Task Name field
+        Assertions.assertThrows(RuntimeException.class, () -> task = new Task("1", "",
+                "Adding Ivan as a new contact"));
     }
 
     @Test
-    @DisplayName("Task name shall not be NULL")
-    public void testUniqueTaskNameNull() {
-        Assertions.assertThrows(RuntimeException.class, () -> {
-            task = new Task("1", null, "Adding Ivan as a new contact");
-        });
+    @DisplayName("Testing Task Description Requirements - Not longer than 50 characters, not NULL or empty")
+    public void testTaskDescriptionRequirements() {
+        // Test that Task Description is not longer than 50 characters
+        Assertions.assertThrows(RuntimeException.class, () -> task = new Task("1",
+                "Add Ivan as Contact", "Adds Ivan the dog as a contact " +
+                "inside of Alex's application"));
+        // Test a NULL Task Description field
+        Assertions.assertThrows(RuntimeException.class, () -> task = new Task ("1",
+                "Add Ivan as Contact", null));
+        // Test an empty Task Description field
+        Assertions.assertThrows(RuntimeException.class, () -> task = new Task ("1",
+                "Add Ivan as Contact", ""));
     }
-
-    @Test
-    @DisplayName("Task description field shall not be longer than 50 characters")
-    public void testUniqueTaskDescription() {
-        Assertions.assertThrows(RuntimeException.class, () -> {
-            task = new Task("1", "Add Ivan as Contact", "Adds Ivan the dog as a contact" +
-                    "inside of Alex's application");
-        });
-    }
-
-    @Test
-    @DisplayName("The task description field shall not be null")
-    public void testUniqueTaskDescriptionNull() {
-        Assertions.assertThrows(RuntimeException.class, () -> {
-            new Task ("1", "Add Ivan as Contact", null);
-        });
-    }
-
-
 }

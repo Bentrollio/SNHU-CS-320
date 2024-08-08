@@ -49,17 +49,18 @@ public class Appointment {
         }
     }
 
-    // FIXME: Appointment date Setter
+    // Appointment date Setter
     public void setAppointmentDate(Date appointmentDate) {
         this.appointmentDate = appointmentDate;
+        verifyAppointmentDate();
     }
 
-    // FIXME: Appointment date getter
+    // Appointment date getter
     public Date getAppointmentDate() {
         return appointmentDate;
     }
 
-    // FIXME: Appointment date verification
+    // Appointment date verification
     public void verifyAppointmentDate() {
         if (this.appointmentDate == null) {
             throw new RuntimeException("Unique Date cannot be null");
@@ -79,6 +80,7 @@ public class Appointment {
     // Appointment description setter
     public void setAppointmentDescription(String appointmentDescription) {
         this.appointmentDescription = appointmentDescription;
+        verifyAppointmentDescription();
     }
 
     // Appointment description getter

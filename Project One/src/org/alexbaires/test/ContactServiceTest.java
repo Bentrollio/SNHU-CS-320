@@ -11,18 +11,15 @@
  * firstName, lastName, Number, Address
  */
 package org.alexbaires.test;
-
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
-import org.junit.jupiter.api.*;
-
 import org.alexbaires.main.ContactService;
 import org.alexbaires.main.Contact;
 
-import java.util.Arrays;
-
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.Arrays;
 
 public class ContactServiceTest {
 
@@ -35,6 +32,7 @@ public class ContactServiceTest {
 
     @Test
     @DisplayName("Should Add a Contact and Retrieve its Individual Details")
+    @Order(1)
     public void testAddAndRetrieveContact() {
         contactService.addContact("Ivan", "Baires",
                 "4078736418", "308 lake hills ln");
@@ -51,7 +49,8 @@ public class ContactServiceTest {
     }
 
     @Test
-    @DisplayName("New contact should have a unique ID generated")
+    @DisplayName("New Contact Should Have a Unique ID Generated")
+    @Order(2)
     public void testWhetherContactHasID() {
         contactService.addContact("Ivan", "Baires",
                 "4078736418", "308 lake hills ln");
@@ -60,7 +59,8 @@ public class ContactServiceTest {
     }
 
     @Test
-    @DisplayName("Testing whether generated ID is Unique")
+    @DisplayName("Testing whether Generated ID is Unique")
+    @Order(3)
     public void testUniqueContactID() {
         contactService.addContact("Aaron", "Judge", "7188675309",
                 "Yankee Stadium, NYC");
@@ -73,6 +73,7 @@ public class ContactServiceTest {
 
     @Test
     @DisplayName("Should Avoid Duplicate Contacts")
+    @Order(4)
     public void testAvoidDuplicateContacts() {
         contactService.addContact("Aaron", "Judge", "7188675309",
                 "Yankee Stadium, NYC");
@@ -83,7 +84,8 @@ public class ContactServiceTest {
     }
 
     @Test
-    @DisplayName("Testing whether multiple contacts are stored")
+    @DisplayName("Testing whether Multiple Contacts are Stored")
+    @Order(5)
     public void testAddMultipleContacts() {
 
         contactService.addContact("Aaron", "Judge", "7188675309",
@@ -97,6 +99,7 @@ public class ContactServiceTest {
 
     @Test
     @DisplayName("Should Delete a Contact")
+    @Order(6)
     public void testDeleteContact() {
         contactService.addContact("Ivan", "Baires",
                 "8631234567", "123 Sesame Street");
@@ -108,6 +111,7 @@ public class ContactServiceTest {
 
     @Test
     @DisplayName("Testing Invalid Contact Data Error-Handling")
+    @Order(7)
     public void testInvalidContactData() {
         // Testing NULL first Name
         Assertions.assertThrows(RuntimeException.class, () -> {
@@ -146,6 +150,7 @@ public class ContactServiceTest {
 
     @Test
     @DisplayName("Testing Updatable Contact Information")
+    @Order(8)
     public void testUpdateContactInfo() {
         contactService.addContact("Ivan", "Baires", "8631234567", "123 Sesame Street");
         String uniqueIDTest = contactService.getContactList().keySet().iterator().next();
@@ -169,6 +174,7 @@ public class ContactServiceTest {
 
     @Test
     @DisplayName("Testing for edge cases")
+    @Order(9)
     public void testEdgeCases() {
         char[] data = new char[1000];
         Arrays.fill(data, 'a');

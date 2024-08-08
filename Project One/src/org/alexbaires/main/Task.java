@@ -39,18 +39,18 @@ public class Task {
     // Verifies that taskID is neither null, blank nor longer than 10 characters
     public void verifyTaskID() {
         if (this.taskID == null || this.taskID.isEmpty()) {
-            throw new RuntimeException("Unique ID string is null or empty");
+            throw new RuntimeException("Task ID string is null or empty");
         }
 
         if (this.taskID.length() > 10) {
-            throw new RuntimeException("Unique ID string is too long, cannot be longer than 10 characters");
+            throw new RuntimeException("Task ID string is too long, cannot be longer than 10 characters");
         }
     }
 
     // Task name Setter
     public void setTaskName(String taskName) {
         this.taskName = taskName;
-        //verifyTaskName();
+        verifyTaskName();
     }
 
     // Task name Getter
@@ -58,7 +58,7 @@ public class Task {
         return taskName;
     }
 
-    // Verifies that taskName is neither null, blank nor longer than 10 characters
+    // Verifies that the task name is neither null, blank nor longer than 10 characters
     public void verifyTaskName() {
         if (this.taskName == null || this.taskName.isEmpty()) {
             throw new RuntimeException("Task name is null or empty");
@@ -72,7 +72,7 @@ public class Task {
     // Task description setter
     public void setTaskDescription(String taskDescription) {
         this.taskDescription = taskDescription;
-        //verifyTaskDescription();
+        verifyTaskDescription();
     }
 
     // Task description getter

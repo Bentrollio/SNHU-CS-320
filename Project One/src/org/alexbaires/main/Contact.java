@@ -34,7 +34,7 @@ public class Contact {
     }
 
     public void setContactID(String contactID) {
-        throw new UnsupportedOperationException("Task ID Not updatable");
+        throw new UnsupportedOperationException("Contact ID Not updatable");
     }
 
     // Retrieves contactID
@@ -123,6 +123,7 @@ public class Contact {
     // Updates and retrieves the customer's mailing address
     public void setMailingAddress(String mailingAddress) {
         this.mailingAddress = mailingAddress;
+        verifyMailingAddress();
     }
 
     public String getMailingAddress() {
@@ -138,11 +139,5 @@ public class Contact {
         if (this.mailingAddress.length() > 30) {
             throw new RuntimeException("Mailing address length must be no longer than 30 characters");
         }
-    }
-
-    // Prints object for verification purposes
-    public String toString() {
-        return contactID + "\n" + firstName + " " + lastName + "\n" +
-                phoneNumber + "\n" + mailingAddress;
     }
 }

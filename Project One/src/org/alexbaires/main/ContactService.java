@@ -31,7 +31,7 @@ public class ContactService {
 
     public void checkExistingContacts(String key) {
         if(contactList.containsKey(key)) {
-            throw new RuntimeException("Contact already exists");
+            throw new IllegalArgumentException("Contact already exists");
         }
     }
 

@@ -11,8 +11,8 @@
  * The description field shall not be null.
  */
 package org.alexbaires.test;
-
 import org.alexbaires.main.Appointment;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.*;
@@ -32,83 +32,67 @@ public class AppointmentTest {
     }
 
     @Test
-    @DisplayName("Unique Appointment ID String should not be longer than 10 characters")
-    public void testAppointmentIDLength() {
-        Assertions.assertThrows(RuntimeException.class, () -> {
-            appointment = new Appointment("123456789101", currentDate,
-                    "Consultation visit");
-        });
+    @DisplayName("Testing Appointment ID Requirements - Not longer than 10 characters, not NULL or empty")
+    @Order(1)
+    public void testAppointmentIDRequirements() {
+        // Test Appointment ID longer than 10 characters
+        Assertions.assertThrows(RuntimeException.class, () -> appointment = new Appointment("123456789101", currentDate,
+                    "Consultation visit"));
+        // Test a NULL Appointment ID
+        Assertions.assertThrows(RuntimeException.class, () -> appointment = new Appointment(null, currentDate,
+                    "Consultation visit"));
+        // Test an empty Appointment ID
+        Assertions.assertThrows(RuntimeException.class, () -> appointment = new Appointment("", currentDate,
+                    "Consultation visit"));
     }
 
     @Test
-    @DisplayName("Appointment ID should not be null or empty")
-    public void testAppointmentIDNullOrEmpty() {
-        Assertions.assertThrows(RuntimeException.class, () -> {
-            appointment = new Appointment(null, currentDate,
-                    "Consultation visit");
-        });
-        Assertions.assertThrows(RuntimeException.class, () -> {
-            appointment = new Appointment("", currentDate,
-                    "Consultation visit");
-        });
-    }
-
-    @Test
-    @DisplayName("Test that appointment ID is not updatable")
+    @DisplayName("Appointment ID shall not be updatable")
+    @Order(2)
     public void testAppointmentIDNotUpdatable() {
         appointment = new Appointment ("1", currentDate,
                 "Consultation");
-        Assertions.assertThrows(UnsupportedOperationException.class, () -> {
-            appointment.setAppointmentID("2");
-        });
+        Assertions.assertThrows(UnsupportedOperationException.class, () -> appointment.setAppointmentID("2"));
     }
 
     @Test
-    @DisplayName("Verifying that an appointment cannot be created for a past date")
+    @DisplayName("IMPORTANT: Testing that Appointment cannot be made for Past Date")
+    @Order(3)
     public void testAppointmentDateNotInPast() {
         Assertions.assertThrows(RuntimeException.class, () -> {
             Calendar calendar = Calendar.getInstance();
             calendar.set(2024,Calendar.JULY,30);
             Date testDate = calendar.getTime();
-            appointment = new Appointment("1", testDate, " Consultation");;
+            appointment = new Appointment("1", testDate, " Consultation");
         });
     }
 
     @Test
-    @DisplayName("Verifying that the date field cannot be null")
-    public void testAppointmentDateNull() {
-        Assertions.assertThrows(RuntimeException.class, () -> {
-            appointment = new Appointment("1", null, " Consultation");
-        });
-    }
-
-    @Test
-    @DisplayName("Verifying appointment object has a required appointment date field")
-    public void testAppointmentHasDate() {
+    @DisplayName("Testing Date Requirements - Must have date, cannot be NULL")
+    @Order(4)
+    public void testAppointmentDateRequirements() {
+        // Testing that each date object has a date
         Date testDate = new Date();
         appointment = new Appointment("1", testDate, "Consultation");
-        Assertions.assertTrue(appointment.getAppointmentDate() != null);
-        Assertions.assertEquals(testDate == appointment.getAppointmentDate(), true);
+        Assertions.assertNotNull(appointment.getAppointmentDate());
+        Assertions.assertSame(testDate, appointment.getAppointmentDate());
+        // Testing that Date is not NULL
+        Assertions.assertThrows(RuntimeException.class, () -> appointment = new Appointment("1",
+                null, " Consultation"));
     }
 
     @Test
-    @DisplayName("Appointment description field shall not be longer than 50 characters")
-    public void testAppointmentDescriptionLength() {
-        Assertions.assertThrows(RuntimeException.class, () -> {
-            appointment = new Appointment("1", new Date(),
-                    "Consultation for the installation of a new roof on home");
-        });
-    }
-
-    @Test
-    @DisplayName("The appointment description field shall not be null or empty")
-    public void testAppointmentDescriptionNullOrEmpty() {
-        Assertions.assertThrows(RuntimeException.class, () -> {
-            new Appointment ("1", new Date(), null);
-        });
-        Assertions.assertThrows(RuntimeException.class, () -> {
-            appointment = new Appointment("1", new Date(),
-                    "");
-        });
+    @DisplayName("Testing Appointment Date Description - No longer than 50 characters, cannot be NULL or empty")
+    @Order(5)
+    public void testAppointmentDateDescriptionRequirements() {
+        // Test that Appointment Description is no longer than 50 characters
+        Assertions.assertThrows(RuntimeException.class, () -> appointment = new Appointment("1", new Date(),
+                "Consultation for the installation of a new roof on home"));
+        // Test a NULL Appointment Description field
+        Assertions.assertThrows(RuntimeException.class, () -> appointment = new Appointment ("1", new Date(),
+                null));
+        // Test a empty Appointment Description field
+        Assertions.assertThrows(RuntimeException.class, () -> appointment = new Appointment("1", new Date(),
+                ""));
     }
 }

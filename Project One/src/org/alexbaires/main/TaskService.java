@@ -40,17 +40,17 @@ public class TaskService {
         return taskList;
     }
 
-    public Task getTask(String taskID) {
+    public Task retrieveTask(String taskID) {
         return taskList.get(taskID);
     }
 
     public void updateTaskName(String taskID, String newTaskName) {
-        Task task = getTask(taskID);
+        Task task = retrieveTask(taskID);
         task.setTaskName(newTaskName);
     }
 
     public void updateTaskDescription(String taskID, String newTaskDescription) {
-        Task task = getTask(taskID);
+        Task task = retrieveTask(taskID);
         task.setTaskDescription(newTaskDescription);
     }
 
